@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 
 @Component({
     selector: 'dialog-overview-example-dialog',
@@ -13,10 +15,14 @@ import { FormGroup, FormControl } from '@angular/forms';
       username: new FormControl(''),
       password: new FormControl(''),
     });
+
+
+    constructor(public dialogRef: MatDialogRef<AuthDialog>) {}
   
     submit() {
+      const isLoggedIn = true;
       if (this.form.valid) {
-        console.log(this.form);
+        this.dialogRef.close({ successful: isLoggedIn, payload :this.form.value });
       }
     }
   }
