@@ -7,11 +7,12 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTableModule} from '@angular/material/table';
 import {MatCardModule} from '@angular/material/card';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     BountiesComponent
   ],
-  imports: [SharedModule, GuildRoutingModule, MatButtonModule, MatSortModule, MatTableModule, MatCardModule]
+  imports: [SharedModule, GuildRoutingModule, MatButtonModule, MatSortModule, MatTableModule, MatCardModule, HttpClientModule]
 })
 export class GuildModule {}

@@ -23,19 +23,26 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 import { UserService } from 'src/app/core/user.service';
+import { BountiesService } from './bounties.service';
 
 @Component({
   selector: 'cb-bounties',
   templateUrl: './bounties.component.html',
-  styleUrls: ['./bounties.component.scss']
+  styleUrls: ['./bounties.component.scss'],
+  providers: [BountiesService]
 })
 export class BountiesComponent implements AfterViewInit {
   title = "exp coin"
+  message: string = "";
   @ViewChild(MatSort) sort?: MatSort;
 
-  constructor(private user: UserService) {
+  constructor(private user: UserService, private bounties: BountiesService) {
     this.user.watch().subscribe(user => {
       console.log(user);
+    });
+    this.bounties.sayHello().subscribe((payload: any) => {
+      console.log(payload);
+      this.message = payload.message;
     })
   }
   displayedColumns: string[] = ['chainCode', 'mission', 'credits', 'class'];

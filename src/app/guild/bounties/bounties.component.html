@@ -2,7 +2,7 @@
 	<div fxLayout="column" fxFlex="50" fxLayoutAlign="center center">
 		<mat-card>
 			<!-- <img class="d-block mx-auto mb-4 rounded" src="/assets/logos/logo.png" alt="" height="64"> -->
-			<!-- <h1>Find a bounty</h1> -->
+			<h1>{{ message ? message : 'Select a bounty' }}</h1>
 			<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
 				<!-- Position Column -->
