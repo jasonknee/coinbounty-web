@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CallbackComponent } from './callback/callback.component';
 import { AuthGuard } from './core/auth.guard';
 
 const routes: Routes = [
@@ -13,6 +14,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./guild/guild.module').then(mod => mod.GuildModule),
       canActivate: [AuthGuard]
+  },
+  {
+    path: 'cb',
+    component: CallbackComponent
   }
 ];
 
