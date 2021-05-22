@@ -2,11 +2,7 @@ import {Component} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-
-const constants = {
-  COINBASE_CLIENT_ID: '4882df2a4555003756280af28b1a6a2ae51c10f08329a9c5325cf83b63ecc94f',
-  REDIRECT_URI: 'http://localhost:4200/cb'
-}
+import { constants } from '../../../shared/constants';
 
 @Component({
     selector: 'dialog-overview-example-dialog',

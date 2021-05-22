@@ -8,6 +8,7 @@ import { LayoutModule } from './layout/layout.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CoreModule } from './core/core.module';
 import { CallbackComponent } from './callback/callback.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,9 @@ import { CallbackComponent } from './callback/callback.component';
     
     AppRoutingModule,
     CoreModule,
-    LayoutModule
+    LayoutModule,
+
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

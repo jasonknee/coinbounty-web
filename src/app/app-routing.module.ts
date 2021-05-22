@@ -16,7 +16,7 @@ const routes: Routes = [
       canActivate: [AuthGuard]
   },
   {
-    path: 'cb',
+    path: 'callback',
     component: CallbackComponent
   }
 ];
