@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { CoinbaseService } from 'src/app/core/coinbase/coinbase.service';
+import { CoinbaseAuthService } from 'src/app/core/coinbase/coinbase-auth.service';
 import { config } from 'src/app/core/config';
 import { AuthDialog } from '../auth-dialog/auth-dialog.component';
 
@@ -24,8 +24,8 @@ export class NavbarComponent {
   constructor(
     public dialog: MatDialog,
     private router: Router,
-    private coinbaseService: CoinbaseService) {
-    this.coinbaseService.account$.subscribe((account: any) => {
+    private coinbaseService: CoinbaseAuthService) {
+    this.coinbaseService.user$.subscribe((account: any) => {
       this.isLoggedIn = !!account;
     })
   }
@@ -44,9 +44,14 @@ export class NavbarComponent {
     });
   }
 
+  doRefresh() {
+    this.coinbaseService.refreshToken().subscribe();
+  }
+
   logout() {
-    this.coinbaseService.account = null;
-    this.router.navigateByUrl('/');
+    this.coinbaseService.logout();
+    // this.coinbaseService.account = null;
+    // this.router.navigateByUrl('/');
   }
 
   redirectToCoinbase() {

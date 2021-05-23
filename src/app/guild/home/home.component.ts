@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
+import { CoinbaseAuthService } from 'src/app/core/coinbase/coinbase-auth.service';
 import { CoinbaseService } from 'src/app/core/coinbase/coinbase.service';
 import { Bounty } from '../shared/bounty';
 import { BountiesService } from './guild.service';
@@ -31,9 +32,9 @@ export class GuildHomeComponent implements AfterViewInit, OnInit {
   @ViewChild(MatSort) sort?: MatSort;
 
   constructor(private coinbaseService: CoinbaseService, private bounties: BountiesService) {
-    this.coinbaseService.account$.subscribe(user => {
-      console.log(user);
-    });
+    // this.coinbaseService.user$.subscribe(user => {
+    //   console.log(user);
+    // });
     this.bounties.sayHello().subscribe((payload: any) => {
       console.log(payload);
       this.message = payload.message;
