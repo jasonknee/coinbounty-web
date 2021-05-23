@@ -1,29 +1,23 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-
-export interface PeriodicElement {
-  mission: string;
-  chainCode: number;
-  credits: number;
-  class: string;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {chainCode: 1, mission: 'Collect Hydrogen from the Jabbas.', credits: 1.0079, class: 'H'},
-  {chainCode: 2, mission: 'Find Helium on the Planet Zorgberg.', credits: 4.0026, class: 'He'},
-  {chainCode: 3, mission: 'Attack Lithium and generate clean energy.', credits: 6.941, class: 'Li'},
-  {chainCode: 4, mission: 'Battle Beryllium', credits: 9.0122, class: 'Be'},
-  {chainCode: 5, mission: 'Hunt Boron', credits: 10.811, class: 'B'},
-  {chainCode: 6, mission: 'Neutralize Carbon', credits: 12.0107, class: 'C'},
-  {chainCode: 7, mission: 'Mix Nitrogen', credits: 14.0067, class: 'N'},
-  {chainCode: 8, mission: 'Breathe Oxygen', credits: 15.9994, class: 'O'},
-  {chainCode: 9, mission: 'Use Fluorine', credits: 18.9984, class: 'F'},
-  {chainCode: 10, mission: 'Fly Neon', credits: 20.1797, class: 'Ne'},
-];
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { CoinbaseService } from 'src/app/core/coinbase/coinbase.service';
+import { Bounty } from '../shared/bounty';
 import { BountiesService } from './guild.service';
+
+const ELEMENT_DATA: Bounty[] = [
+  { id: '', chainCode: 1, missionObjective: 'Collect Hydrogen from the Jabbas.', credits: 1.0079, class: 'H', reward: { amount: 1, currency: "BTC"} },
+  { id: '', chainCode: 2, missionObjective: 'Find Helium on the Planet Zorgberg.', credits: 4.0026, class: 'He', reward: { amount: 1, currency: "BTC"} },
+  { id: '', chainCode: 3, missionObjective: 'Attack Lithium and generate clean energy.', credits: 6.941, class: 'Li', reward: { amount: 1, currency: "BTC"} },
+  { id: '', chainCode: 4, missionObjective: 'Battle Beryllium', credits: 9.0122, class: 'Be', reward: { amount: 1, currency: "BTC"} },
+  { id: '', chainCode: 5, missionObjective: 'Hunt Boron', credits: 10.811, class: 'B', reward: { amount: 1, currency: "BTC"} },
+  { id: '', chainCode: 6, missionObjective: 'Neutralize Carbon', credits: 12.0107, class: 'C', reward: { amount: 1, currency: "BTC"} },
+  { id: '', chainCode: 7, missionObjective: 'Mix Nitrogen', credits: 14.0067, class: 'N', reward: { amount: 1, currency: "BTC"} },
+  { id: '', chainCode: 8, missionObjective: 'Breathe Oxygen', credits: 15.9994, class: 'O', reward: { amount: 1, currency: "BTC"} },
+  { id: '', chainCode: 9, missionObjective: 'Use Fluorine', credits: 18.9984, class: 'F', reward: { amount: 1, currency: "BTC"} },
+  { id: '', chainCode: 10, missionObjective: 'Fly Neon', credits: 20.1797, class: 'Ne', reward: { amount: 1, currency: "BTC"} },
+];
 
 @Component({
   selector: 'cb-guild-home',
@@ -57,7 +51,7 @@ export class GuildHomeComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
     if (this.sort) {
-        this.dataSource.sort = this.sort;
+      this.dataSource.sort = this.sort;
     }
   }
 }

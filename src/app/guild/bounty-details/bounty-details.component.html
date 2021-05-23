@@ -1,7 +1,16 @@
 <div fxLayout="column" fxLayoutAlign="center center" fxFill>
-	<div fxLayout="column" fxFlex="50" fxLayoutAlign="center center">
-        <img class="d-block mx-auto mb-4 rounded" src="/assets/logos/logo.png" alt="" height="64">
-        <h1>Your bounty details belong here</h1>
-        <button mat-raised-button routerLink="../..">Accept</button>
-	</div>
+        <div fxLayout="column" fxFlex="50" fxLayoutAlign="center center">
+                <mat-card>
+                        <img class="d-block mx-auto mb-4 rounded" src="/assets/logos/logo.png" alt="" height="64">
+                        <h1>Your bounty details belong here</h1>
+                        <div *ngIf="bounty">
+                                {{ bounty.chainCode }}
+                                {{ bounty.missionObjective }}
+                                {{ bounty.credits }}
+                                {{ bounty.class }}
+                                {{ bounty.reward.amount }} {{ bounty.reward.currency }}
+                        </div>
+                        <button mat-raised-button routerLink="../..">Accept</button>
+                </mat-card>
+        </div>
 </div>
