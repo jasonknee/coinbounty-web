@@ -25,7 +25,7 @@ export class NavbarComponent {
     public dialog: MatDialog,
     private router: Router,
     private coinbaseService: CoinbaseService) {
-    this.coinbaseService.watch().subscribe((account: any) => {
+    this.coinbaseService.account$.subscribe((account: any) => {
       this.isLoggedIn = !!account;
     })
   }
@@ -39,13 +39,13 @@ export class NavbarComponent {
     dialogRef.afterClosed().subscribe(isLoggedIn => {
       if (isLoggedIn) {
         this.router.navigateByUrl('/guild');
-        this.coinbaseService.set(isLoggedIn);
+        // this.coinbaseService.set(isLoggedIn);
       }
     });
   }
 
   logout() {
-    this.coinbaseService.set(null);
+    this.coinbaseService.account = null;
     this.router.navigateByUrl('/');
   }
 
@@ -54,6 +54,6 @@ export class NavbarComponent {
   }
 
   buildUrl(clientId: string, redirectUri: string) {
-    return `https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=SECURE_RANDOM&scope=wallet:accounts:read`
+    return `https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=SECURE_RANDOM&scope=wallet:accounts:read+wallet:transactions:read`
   }
 }

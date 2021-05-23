@@ -6,16 +6,14 @@ import { CoinbaseService } from "./coinbase/coinbase.service";
     providedIn: "root",
 })
 export class AuthGuard implements CanActivate {
-    constructor(private userService: CoinbaseService, private router: Router) { }
+    constructor(private coinbaseService: CoinbaseService, private router: Router) { }
     canActivate(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
     ) {
-        const user = this.userService.get();
-        if (user) {
-            return true;
-        } else {
+        if (!this.coinbaseService.account) {
             return this.router.createUrlTree(['/']);
         }
+        return true;
     }
 }

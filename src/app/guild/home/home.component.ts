@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 
@@ -23,21 +23,21 @@ const ELEMENT_DATA: PeriodicElement[] = [
 ];
 
 import { CoinbaseService } from 'src/app/core/coinbase/coinbase.service';
-import { BountiesService } from './bounties.service';
+import { BountiesService } from './guild.service';
 
 @Component({
-  selector: 'cb-bounties',
-  templateUrl: './bounties.component.html',
-  styleUrls: ['./bounties.component.scss'],
+  selector: 'cb-guild-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.scss'],
   providers: [BountiesService]
 })
-export class BountiesComponent implements AfterViewInit {
+export class GuildHomeComponent implements AfterViewInit, OnInit {
   title = "exp coin"
   message: string = "";
   @ViewChild(MatSort) sort?: MatSort;
 
-  constructor(private user: CoinbaseService, private bounties: BountiesService) {
-    this.user.watch().subscribe(user => {
+  constructor(private coinbaseService: CoinbaseService, private bounties: BountiesService) {
+    this.coinbaseService.account$.subscribe(user => {
       console.log(user);
     });
     this.bounties.sayHello().subscribe((payload: any) => {
@@ -48,6 +48,12 @@ export class BountiesComponent implements AfterViewInit {
   displayedColumns: string[] = ['chainCode', 'mission', 'credits', 'class'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
 
+  async ngOnInit() {
+    // const accounts = await this.coinbaseService.getAccounts();
+    // console.log(accounts);
+    const transactions = await this.coinbaseService.getTransactions();
+    console.log(transactions);
+  }
 
   ngAfterViewInit() {
     if (this.sort) {

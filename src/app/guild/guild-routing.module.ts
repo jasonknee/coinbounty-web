@@ -1,12 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { BountiesComponent } from './bounties/bounties.component';
+import { GuildHomeComponent } from './home/home.component';
+import { BountyCreateComponent } from './bounty-create/bounty-create.component';
+import { BountyDetailsComponent } from './bounty-details/bounty-details.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: BountiesComponent
+    component: GuildHomeComponent
+  },
+  {
+    path: 'bounty-create',
+    component: BountyCreateComponent
+  },
+  {
+    path: 'bounty/:id',
+    component: BountyDetailsComponent
   }
 ];
 

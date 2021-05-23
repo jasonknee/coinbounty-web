@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 import { config } from './../config';
 
@@ -8,12 +8,17 @@ import { config } from './../config';
   providedIn: 'root'
 })
 export class CoinbaseService {
-  private accountSubject = new BehaviorSubject(undefined);
+  private _account = new BehaviorSubject(undefined);
   constructor(private http: HttpClient) { }
-
-  get: any = () => this.accountSubject.getValue();
-  set = (data: any) => this.accountSubject.next(data);
-  watch = () => this.accountSubject.asObservable();
+  get account(): any {
+    return this._account.getValue();
+  }
+  set account(val: any) {
+    this._account.next(val);
+  }
+  get account$(): Observable<any> {
+    return this._account.asObservable();
+  }
 
   setup(code: string) {
     return new Promise((resolve, reject) => {
@@ -23,6 +28,27 @@ export class CoinbaseService {
         }, reject)
       }, reject)
     });
+  }
+
+  async getAccounts() {
+    if (!this.account.accountsResponse) {
+      await this.fetchAccounts().toPromise();
+    }
+
+    return this.account.accountsResponse;
+  }
+
+  async getTransactions() {
+    if (!this.account.accountsResponse) {
+      await this.fetchAccounts().toPromise();
+    }
+
+    const btcAccountId = this.account.accountsResponse.data[0].id;
+    if (!this.account.transactionsResponse) {
+      await this.fetchTransactions(btcAccountId).toPromise();
+    }
+
+    return this.account.transactionsResponse;
   }
 
   private fetchToken(code: string) {
@@ -38,28 +64,60 @@ export class CoinbaseService {
       .pipe(
         take(1),
         tap((tokenResponse: any) => {
-          this.set({
-            ...this.get(),
+          this.account = ({
+            ...this.account,
             tokenResponse
           });
         })
       );
   }
 
+  private buildHeaders = () => new HttpHeaders().set(
+    "Authorization",
+    "Bearer " + this.account.tokenResponse.access_token
+  );
 
   private fetchUser() {
-    const headers = new HttpHeaders().set(
-      "Authorization",
-      "Bearer " + this.get().tokenResponse.access_token
-    );
+    const headers = this.buildHeaders();
 
-    return this.http.get("https://api.coinbase.com/v2/user", { headers })
+    return this.http.get(`${config.COINBASE_BASE_URL}/user`, { headers })
       .pipe(
         take(1),
         tap((userResponse: any) => {
-          this.set({
-            ...this.get(),
+          this.account = ({
+            ...this.account,
             userResponse
+          });
+        })
+      );
+  }
+
+  private fetchAccounts() {
+    const headers = this.buildHeaders();
+
+    return this.http.get(`${config.COINBASE_BASE_URL}/accounts`, { headers })
+      .pipe(
+        take(1),
+        tap((accountsResponse: any) => {
+          this.account = ({
+            ...this.account,
+            accountsResponse
+          });
+        })
+      );
+  }
+
+
+  private fetchTransactions(accountId: string) {
+    const headers = this.buildHeaders();
+
+    return this.http.get(`${config.COINBASE_BASE_URL}/accounts/${accountId}/transactions`, { headers })
+      .pipe(
+        take(1),
+        tap((transactionsResponse: any) => {
+          this.account = ({
+            ...this.account,
+            transactionsResponse
           });
         })
       );
