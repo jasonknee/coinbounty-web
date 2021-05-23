@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { config } from '../../../core/config';
 
 @Component({
     selector: 'dialog-overview-example-dialog',
@@ -24,5 +25,13 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
       if (this.form.valid) {
         this.dialogRef.close({ successful: isLoggedIn, payload :this.form.value });
       }
+    }
+
+    redirectToCoinbase() {
+      window.location.href = this.buildUrl(config.COINBASE_CLIENT_ID, config.REDIRECT_URI);
+    }
+
+    buildUrl(clientId: string, redirectUri: string) {
+      return `https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=SECURE_RANDOM&scope=wallet:accounts:read`
     }
   }

@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LayoutModule } from './layout/layout.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { CoreModule } from './core/core.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,9 @@ import { CoreModule } from './core/core.module';
     
     AppRoutingModule,
     CoreModule,
-    LayoutModule
+    LayoutModule,
+
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

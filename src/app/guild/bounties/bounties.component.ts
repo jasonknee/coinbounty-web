@@ -22,7 +22,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
   {chainCode: 10, mission: 'Fly Neon', credits: 20.1797, class: 'Ne'},
 ];
 
-import { UserService } from 'src/app/core/user.service';
+import { CoinbaseService } from 'src/app/core/coinbase/coinbase.service';
 import { BountiesService } from './bounties.service';
 
 @Component({
@@ -36,7 +36,7 @@ export class BountiesComponent implements AfterViewInit {
   message: string = "";
   @ViewChild(MatSort) sort?: MatSort;
 
-  constructor(private user: UserService, private bounties: BountiesService) {
+  constructor(private user: CoinbaseService, private bounties: BountiesService) {
     this.user.watch().subscribe(user => {
       console.log(user);
     });
