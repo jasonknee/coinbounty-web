@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { constants } from '../../../shared/constants';
+import { config } from '../../../core/config';
 
 @Component({
     selector: 'dialog-overview-example-dialog',
@@ -28,7 +28,7 @@ import { constants } from '../../../shared/constants';
     }
 
     redirectToCoinbase() {
-      window.location.href = this.buildUrl(constants.COINBASE_CLIENT_ID, constants.REDIRECT_URI);
+      window.location.href = this.buildUrl(config.COINBASE_CLIENT_ID, config.REDIRECT_URI);
     }
 
     buildUrl(clientId: string, redirectUri: string) {

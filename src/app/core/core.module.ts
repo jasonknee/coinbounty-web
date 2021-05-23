@@ -1,11 +1,19 @@
 import { NgModule, SkipSelf, Optional } from '@angular/core';
 import { AuthGuard } from './auth.guard';
 
-import { UserService } from './user.service';
+import { CoinbaseService } from './coinbase/coinbase.service';
+import { CoinbaseCallbackComponent } from './coinbase/callback.component';
+import { CoinbaseCallbackGuard } from './coinbase/callback.guard';
+
 @NgModule({
+    declarations: [
+        CoinbaseCallbackComponent
+    ],
     providers: [
-        UserService,
-        AuthGuard]
+        AuthGuard,
+        CoinbaseService,
+        CoinbaseCallbackGuard
+    ]
 })
 export class CoreModule
 {

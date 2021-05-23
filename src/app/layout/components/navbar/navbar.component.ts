@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/core/user.service';
+import { CoinbaseService } from 'src/app/core/coinbase/coinbase.service';
+import { config } from 'src/app/core/config';
 import { AuthDialog } from '../auth-dialog/auth-dialog.component';
 
 export interface DialogData {
@@ -23,11 +24,10 @@ export class NavbarComponent {
   constructor(
     public dialog: MatDialog,
     private router: Router,
-    private userService: UserService) {
-      this.userService.watch().subscribe((user: any) => {
-        console.log(user);
-        this.isLoggedIn  = user?.successful;
-      })
+    private coinbaseService: CoinbaseService) {
+    this.coinbaseService.watch().subscribe((account: any) => {
+      this.isLoggedIn = !!account;
+    })
   }
 
   openDialog(): void {
@@ -39,13 +39,21 @@ export class NavbarComponent {
     dialogRef.afterClosed().subscribe(isLoggedIn => {
       if (isLoggedIn) {
         this.router.navigateByUrl('/guild');
-        this.userService.set(isLoggedIn);
+        this.coinbaseService.set(isLoggedIn);
       }
     });
   }
 
   logout() {
-    this.userService.set(null);
+    this.coinbaseService.set(null);
     this.router.navigateByUrl('/');
+  }
+
+  redirectToCoinbase() {
+    window.location.href = this.buildUrl(config.COINBASE_CLIENT_ID, config.REDIRECT_URI);
+  }
+
+  buildUrl(clientId: string, redirectUri: string) {
+    return `https://www.coinbase.com/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=SECURE_RANDOM&scope=wallet:accounts:read`
   }
 }

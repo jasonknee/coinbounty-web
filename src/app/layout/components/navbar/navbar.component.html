@@ -3,8 +3,8 @@
   <span class="spacer"></span>
   <div class="button-row">
     <ng-container *ngIf="!isLoggedIn">
-      <button mat-stroked-button (click)="openDialog()">Login</button>
-      <button mat-flat-button color="primary" (click)="openDialog()">Signup</button>
+      <button mat-stroked-button (click)="redirectToCoinbase()">Login</button>
+      <button mat-flat-button color="primary" (click)="redirectToCoinbase()">Signup</button>
     </ng-container>
     <ng-container *ngIf="isLoggedIn">
       <button mat-raised-button routerLink="/guild">Bounties</button>

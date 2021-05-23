@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CallbackComponent } from './callback/callback.component';
+import { CoinbaseCallbackComponent } from './core/coinbase/callback.component';
+import { CoinbaseCallbackGuard } from './core/coinbase/callback.guard';
 import { AuthGuard } from './core/auth.guard';
 
 const routes: Routes = [
@@ -17,7 +18,8 @@ const routes: Routes = [
   },
   {
     path: 'callback',
-    component: CallbackComponent
+    component: CoinbaseCallbackComponent,
+    canActivate: [CoinbaseCallbackGuard]
   }
 ];
 
