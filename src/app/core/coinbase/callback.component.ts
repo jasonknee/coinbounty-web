@@ -24,4 +24,25 @@ export class CoinbaseCallbackComponent implements OnInit {
                 this.router.navigate(['/'])
             });
     }
+
+    
+
+
+    isOddAsync(num: number) : Promise<any> {
+        return new Promise((resolve, reject) => {
+            if (num % 2) {
+                reject(false);
+            } else {
+                resolve(true);
+            }
+        });
+    }
+
+    isOdd(num: number): boolean {
+        if (num % 2) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

@@ -119,7 +119,7 @@ export class CoinbaseAuthService {
       );
   }
 
-  private fetchUser() {
+  public fetchUser(): Observable<any> {
     return this.http.get<any>(`${config.COINBASE_BASE_URL}/user`)
       .pipe(
         map((response: any) => response.data as User),
